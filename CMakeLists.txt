@@ -5,7 +5,13 @@ VERSION 0.1.1
 LANGUAGES CXX)
 
 include(GNUInstallDirs)
-include("cmake/ez-cmake/install_package.cmake")
+include("cmake/ez-cmake/install-package.cmake")
+
+option(BUILD_TESTS "Build the test executables" ON)
+option(SEPARATE_DIRECTORY "Install the package into its own directory" ON)
+set(CONFIG_DIR "${CMAKE_INSTALL_DATAROOTDIR}/ez-archive" CACHE STRING "The relative directory to install package config files.")
+
+
 
 include(FindLibArchive)
 if(NOT ${LibArchive_FOUND})
@@ -42,7 +48,9 @@ PUBLIC
 	"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>" 
 )
 
-add_subdirectory("test")
+if(BUILD_TESTS)
+	add_subdirectory("test")
+endif()
 
 install(
 DIRECTORY 
@@ -62,7 +70,7 @@ install(TARGETS
 
 install_package(
 	NAME "ez-archive"
-	DESTINATION "${EZ_ARCHIVE_CMAKE_DIR}"
+	DESTINATION "${CONFIG_DIR}"
 	EXPORT "ez-archive-targets"
 	VERSION "${EZ_ARCHIVE_VERSION}"
 	COMPATIBILITY "SameMajorVersion"
