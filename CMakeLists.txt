@@ -4,8 +4,8 @@ project(EZ_ARCHIVE
 VERSION 0.1.1
 LANGUAGES CXX)
 
-find_package(BGInstallPackage)
 include(GNUInstallDirs)
+include("cmake/ez-cmake/install_package.cmake")
 
 include(FindLibArchive)
 if(NOT ${LibArchive_FOUND})
